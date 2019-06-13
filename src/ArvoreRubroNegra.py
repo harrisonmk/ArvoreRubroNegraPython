@@ -129,7 +129,7 @@ class ArvoreRubroNegra(object):
             x = z.esquerda
             self.__rb_transpante(z, z.esquerda)
         else:
-            y = self.minimum(z.direita)
+            y = self.minimo(z.direita)
             y_original_color = y.cor
             x = y.direita
             if y.pai == z:
@@ -139,7 +139,7 @@ class ArvoreRubroNegra(object):
                 y.direita = z.direita
                 y.direita.parent = y
 
-            self.__rb_transplant(z, y)
+            self.__rb_transplante(z, y)
             y.esquerda = z.esquerda
             y.esquerda.pai = y
             y.cor = z.cor
