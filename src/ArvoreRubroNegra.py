@@ -105,7 +105,7 @@ class ArvoreRubroNegra(object):
         v.pai = u.pai
 
     def __exluir_node_ajudante(self, node, chave):
-        # find the node containing key
+        
         z = self.TNULL
         while node != self.TNULL:
             if node.valor == chave:
@@ -150,7 +150,7 @@ class ArvoreRubroNegra(object):
     def  __conserta_insercao(self, k):
         while k.pai.cor == 1:
             if k.pai == k.pai.pai.direita:
-                u = k.pai.pai.esquerda # uncle
+                u = k.pai.pai.esquerda # tio
                 if u.cor == 1:
                     # case 3.1
                     u.cor = 0
@@ -167,20 +167,20 @@ class ArvoreRubroNegra(object):
                     k.pai.pai.cor = 1
                     self.rotacaoEsquerda(k.pai.pai)
             else:
-                u = k.pai.pai.direita # uncle
+                u = k.pai.pai.direita # tio
 
                 if u.cor == 1:
-                    # mirror case 3.1
+                   
                     u.cor = 0
                     k.pai.cor = 0
                     k.pai.pai.cor = 1
                     k = k.pai.pai 
                 else:
                     if k == k.pai.direita:
-                        # mirror case 3.2.2
+                        
                         k = k.pai
                         self.rotacaoEsquerda(k)
-                    # mirror case 3.2.1
+                    
                     k.pai.cor = 0
                     k.pai.pai.cor = 1
                     self.rotacaoDireita(k.pai.pai)
@@ -202,7 +202,7 @@ class ArvoreRubroNegra(object):
 
 
 
-    # rotacao ‡ esquerda do nÛ x
+    # rotacao √† esquerda do n√≥ x
     def rotacaoEsquerda(self, x):
         y = x.direita
         x.direita = y.esquerda
@@ -219,7 +219,7 @@ class ArvoreRubroNegra(object):
         y.esquerda = x
         x.pai = y
 
-    # rotacao ‡ direita do nÛ x
+    # rotacao √† direita do n√≥ x
     def rotacaoDireita(self, x):
         y = x.esquerda
         x.esquerda = y.direita
@@ -269,32 +269,32 @@ class ArvoreRubroNegra(object):
         else:
             y.direita = node
 
-        # se o novo nÛ for um nÛ raiz, simplesmente retorne
+        # se o novo n√≥ for um n√≥ raiz, simplesmente retorne
         if node.pai == None:
             node.cor = 0
             return
 
-        # if the grandparent is None, simply return
+        
         if node.pai.pai == None:
             return
 
-        # Fix the tree
+        
         self.__conserta_insercao(node)
  
 
-    # encontre o nÛ com a chave minima
+    # encontre o n√≥ com a chave minima
     def minimo(self, node):
         while node.esquerda != self.TNULL:
             node = node.esquerda
         return node
 
-    # encontra o nÛ com a chave m·xima
+    # encontra o n√≥ com a chave m√°xima
     def maximo(self, node):
         while node.direita != self.TNULL:
             node = node.direita
         return node
 
-    # encontra o sucessor de um determinado nÛ
+    # encontra o sucessor de um determinado n√≥
     def sucessor(self, x):
      
         if x.direita != self.TNULL:
@@ -307,7 +307,7 @@ class ArvoreRubroNegra(object):
             y = y.pai
         return y
 
-    # encontra o antecessor de um determinado nÛ
+    # encontra o antecessor de um determinado n√≥
     def antecessor(self, x):
         
         if (x.esquerda != self.TNULL):
