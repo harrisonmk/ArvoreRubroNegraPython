@@ -36,4 +36,5 @@ bst.inorder()
 print()
 print("pos Ordem")
 bst.postorder()
-    
+print()
+print()
