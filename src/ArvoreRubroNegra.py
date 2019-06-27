@@ -1,7 +1,8 @@
 from No import No
 
+
 class ArvoreRubroNegra(object):
-    
+
     def __init__(self):
         self.TNULL = No(0)
         self.TNULL.cor = 0
@@ -9,26 +10,42 @@ class ArvoreRubroNegra(object):
         self.TNULL.direita = None
         self.raiz = self.TNULL
 
-
     def __pre_order_ajudante(self, node):
         if node != self.TNULL:
-            print(node.valor, " ", end="")
+          if node.cor == 1:
+            print("{}v".format(node.valor))
             self.__pre_order_ajudante(node.esquerda)
             self.__pre_order_ajudante(node.direita)
+          else:
+
+             print("{}p".format(node.valor))
+             self.__pre_order_ajudante(node.esquerda)
+             self.__pre_order_ajudante(node.direita)
 
     def __in_order_ajudante(self, node):
         if node != self.TNULL:
-            self.__in_order_ajudante(node.esquerda)
-            print(node.valor, " ", end="")
-            self.__in_order_ajudante(node.direita)
+            if node.cor == 1:
+              self.__in_order_ajudante(node.esquerda)
+              print("{}v".format(node.valor))
+              self.__in_order_ajudante(node.direita)
+            else:
+               self.__in_order_ajudante(node.esquerda)
+               print("{}p".format(node.valor))
+               self.__in_order_ajudante(node.direita)
+
 
     def __post_order_ajudante(self, node):
         if node != self.TNULL:
-            self.__post_order_ajudante(node.esquerda)
-            self.__post_order_ajudante(node.direita)
-            print(node.valor, " ", end="")
+            if node.cor == 1:
+               self.__post_order_ajudante(node.esquerda)
+               self.__post_order_ajudante(node.direita)
+               print("{}v".format(node.valor))
+            else:
+                self.__post_order_ajudante(node.esquerda)
+                self.__post_order_ajudante(node.direita)
+                print("{}p".format(node.valor))
 
- 
+
     def __busca_arvore_ajudante(self, node, chave):
         if node == TNULL or chave == node.valor:
             return node
@@ -85,9 +102,9 @@ class ArvoreRubroNegra(object):
                         s.direita.cor = 0
                         s.cor = 1
                         self.left_rotate(s)
-                        s = x.pai.esquerda 
+                        s = x.pai.esquerda
 
-                    # case 3.4
+                        # case 3.4
                     s.cor = x.pai.cor
                     x.pai.cor = 0
                     s.esquerda.cor = 0
@@ -105,7 +122,7 @@ class ArvoreRubroNegra(object):
         v.pai = u.pai
 
     def __exluir_node_ajudante(self, node, chave):
-        
+
         z = self.TNULL
         while node != self.TNULL:
             if node.valor == chave:
@@ -117,7 +134,7 @@ class ArvoreRubroNegra(object):
                 node = node.esquerda
 
         if z == self.TNULL:
-            print ("Nao foi possivel encontrar a chave na arvore")
+            print("Nao foi possivel encontrar a chave na arvore")
             return
 
         y = z
@@ -146,11 +163,10 @@ class ArvoreRubroNegra(object):
         if y_original_color == 0:
             self.__conserta_exclusao(x)
 
-    
-    def  __conserta_insercao(self, k):
+    def __conserta_insercao(self, k):
         while k.pai.cor == 1:
             if k.pai == k.pai.pai.direita:
-                u = k.pai.pai.esquerda # tio
+                u = k.pai.pai.esquerda  # tio
                 if u.cor == 1:
                     # case 3.1
                     u.cor = 0
@@ -167,42 +183,36 @@ class ArvoreRubroNegra(object):
                     k.pai.pai.cor = 1
                     self.rotacaoEsquerda(k.pai.pai)
             else:
-                u = k.pai.pai.direita # tio
+                u = k.pai.pai.direita  # tio
 
                 if u.cor == 1:
-                   
+
                     u.cor = 0
                     k.pai.cor = 0
                     k.pai.pai.cor = 1
-                    k = k.pai.pai 
+                    k = k.pai.pai
                 else:
                     if k == k.pai.direita:
-                        
                         k = k.pai
                         self.rotacaoEsquerda(k)
-                    
+
                     k.pai.cor = 0
                     k.pai.pai.cor = 1
                     self.rotacaoDireita(k.pai.pai)
             if k == self.raiz:
                 break
         self.raiz.cor = 0
-    
 
     def preorder(self):
         self.__pre_order_ajudante(self.raiz)
 
-   
     def inorder(self):
         self.__in_order_ajudante(self.raiz)
 
-    
     def postorder(self):
         self.__post_order_ajudante(self.raiz)
 
-
-
-    # rotacao √† esquerda do n√≥ x
+    # rotacao ‡ esquerda do nÛ x
     def rotacaoEsquerda(self, x):
         y = x.direita
         x.direita = y.esquerda
@@ -219,7 +229,7 @@ class ArvoreRubroNegra(object):
         y.esquerda = x
         x.pai = y
 
-    # rotacao √† direita do n√≥ x
+    # rotacao ‡ direita do nÛ x
     def rotacaoDireita(self, x):
         y = x.esquerda
         x.esquerda = y.direita
@@ -236,19 +246,17 @@ class ArvoreRubroNegra(object):
         y.direita = x
         x.pai = y
 
-
     def buscaArvore(self, k):
         return self.__busca_arvore_ajudante(self.raiz, k)
 
-
     def inserir(self, chave):
-        
+
         node = No(chave)
         node.pai = None
         node.valor = chave
         node.esquerda = self.TNULL
         node.direita = self.TNULL
-        node.cor = 1 
+        node.cor = 1
 
         y = None
         x = self.raiz
@@ -269,47 +277,43 @@ class ArvoreRubroNegra(object):
         else:
             y.direita = node
 
-        # se o novo n√≥ for um n√≥ raiz, simplesmente retorne
+        # se o novo nÛ for um nÛ raiz, simplesmente retorne
         if node.pai == None:
             node.cor = 0
             return
 
-        
         if node.pai.pai == None:
             return
 
-        
         self.__conserta_insercao(node)
- 
 
-    # encontre o n√≥ com a chave minima
+    # encontre o nÛ com a chave minima
     def minimo(self, node):
         while node.esquerda != self.TNULL:
             node = node.esquerda
         return node
 
-    # encontra o n√≥ com a chave m√°xima
+    # encontra o nÛ com a chave m·xima
     def maximo(self, node):
         while node.direita != self.TNULL:
             node = node.direita
         return node
 
-    # encontra o sucessor de um determinado n√≥
+    # encontra o sucessor de um determinado nÛ
     def sucessor(self, x):
-     
+
         if x.direita != self.TNULL:
             return self.maximo(x.direita)
 
-       
         y = x.pai
         while y != self.TNULL and x == y.direita:
             x = y
             y = y.pai
         return y
 
-    # encontra o antecessor de um determinado n√≥
+    # encontra o antecessor de um determinado nÛ
     def antecessor(self, x):
-        
+
         if (x.esquerda != self.TNULL):
             return self.maximo(x.esquerda)
 
@@ -320,10 +324,6 @@ class ArvoreRubroNegra(object):
 
         return y
 
-    
-    
-
-
     def get_raiz(self):
         return self.raiz
 
@@ -332,7 +332,3 @@ class ArvoreRubroNegra(object):
         self.__exluir_node_ajudante(self.raiz, data)
 
 
-
-    
-
-    
